@@ -1,0 +1,96 @@
+body {
+    background-color: #1a1a2e; /* Dark purple background for the overall page */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Full viewport height */
+    margin: 0;
+}
+
+.onboarding-container {
+    width: 90%; /* Adjust as needed for responsiveness */
+    max-width: 400px; /* Max width similar to a mobile screen */
+    background-color: #211a30; /* Darker background for the card */
+    border-radius: 25px; /* Rounded corners */
+    padding: 30px 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+    min-height: 600px; /* Adjust height as per image */
+    position: relative; /* For positioning the dots pattern */
+    overflow: hidden; /* Hide overflow for the dotted pattern */
+}
+
+/* Dotted background pattern (mimicking the image) */
+.onboarding-container::before {
+    content: '';
+    position: absolute;
+    top: -50px; /* Adjust position as needed */
+    right: -50px; /* Adjust position as needed */
+    width: 200px; /* Size of the pattern area */
+    height: 200px; /* Size of the pattern area */
+    background-image: radial-gradient(circle, #4a4a6e 1px, transparent 1px);
+    background-size: 15px 15px; /* Spacing of the dots */
+    opacity: 0.3;
+    transform: rotate(45deg); /* Rotate to match image */
+}
+
+.top-indicator {
+    width: 60px;
+    height: 5px;
+    background-color: #555;
+    border-radius: 5px;
+    margin-top: 10px; /* Space from the top of the container */
+}
+
+.content h1 {
+    font-size: 2.2rem;
+    font-weight: bold;
+    line-height: 1.3;
+}
+
+.dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    background-color: #5a3d8c; /* Darker purple for inactive dots */
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.dot.active {
+    background-color: #fff; /* White for the active dot */
+}
+
+.custom-btn-purple {
+    background-color: #6a0dad; /* Purple color */
+    border-color: #6a0dad;
+    font-size: 1.2rem;
+    padding: 15px 0;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.custom-btn-purple:hover {
+    background-color: #5a0ca2;
+    border-color: #5a0ca2;
+}
+
+.custom-btn-dark {
+    background-color: #333; /* Darker color for Skip button */
+    border-color: #333;
+    color: #fff;
+    font-size: 1.2rem;
+    padding: 15px 0;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.custom-btn-dark:hover {
+    background-color: #444;
+    border-color: #444;
+}
