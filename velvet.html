@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      background-color: #0e0e0e;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      padding-bottom: 5rem;
+    }
+    .card-custom {
+      background-color: #1a1a1a;
+      border: 1px solid #292929;
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    .text-success-custom {
+      color: #3dfc85;
+    }
+    .purple-text {
+      color: #a855f7;
+    }
+    .btn-box {
+      border: 1px solid #292929;
+      border-radius: 12px;
+      padding: 0.5rem 1rem;
+      margin-right: 0.5rem;
+    }
+    .profile-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+    .table-dark th, .table-dark td {
+      vertical-align: middle;
+    }
+    /* canvas {
+      max-width: 100%;
+    } */
+
+    canvas {
+  display: block;
+  max-width: 120px;
+  max-height: 120px;
+  width: 100% !important;
+  height: auto !important;
+}
+
+.chart-small {
+  max-width: 120px;
+  max-height: 100px;
+}
+.chart-medium {
+  max-width: 100%;
+  height: 160px !important;
+}
+
+
+/* Loading Spinner */
+#loadingSpinner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #0e0e0e;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.spinner-ring {
+  width: 70px;
+  height: 70px;
+  border: 8px solid rgba(255, 255, 255, 0.1);
+  border-top: 8px solid #a855f7;
+  border-radius: 50%;
+  animation: spin 1s linear infinite, glow 1.5s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 10px #a855f7, 0 0 20px #a855f7;
+  }
+  50% {
+    box-shadow: 0 0 30px #a855f7, 0 0 60px #a855f7;
+  }
+}
+
+#loadingSpinner.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+
+  </style>
+</head>
+<body>
+
+
+
+
+
+    <!-- Loading Spinner -->
+<div id="loadingSpinner">
+  <div class="spinner-ring"></div>
+</div>
+
+
+
+  <div class="container py-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h5><i class="fas fa-bars me-2"></i>Dashboard</h5>
+      <img src="images/user-icon.jpg" alt="Avatar" class="profile-avatar">
+    </div>
+
+    <div class="card-custom d-flex justify-content-between align-items-center">
+      <div>
+        <div>Hi, Beehive</div>
+        <small>Your Earnings..........Decentralized by the way</small>
+        <h2 class="mt-2">$67,000 <span class="text-success-custom fs-6">+567%</span></h2>
+      </div>
+      <!-- <canvas id="mainChart" width="180" height="180"></canvas> -->
+       <canvas id="mainChart" class="chart-small"></canvas>
+
+    </div>
+
+    <div class="row text-center mb-3">
+      <div class="col-12 col-sm-4 mb-2 mb-sm-0">
+        <div class="btn-box h-100">
+          <div class="purple-text"><i class="fas fa-chart-line"></i></div>
+          <div>Today's Revenue</div>
+          <small>$6890 <span class="text-success-custom">+56.7%</span></small>
+        </div>
+      </div>
+      <div class="col-12 col-sm-4 mb-2 mb-sm-0">
+        <div class="btn-box h-100">
+          <div class="purple-text"><i class="fas fa-user"></i></div>
+          <div>Today's Users</div>
+          <small>2340</small>
+        </div>
+      </div>
+      <div class="col-12 col-sm-4">
+        <div class="btn-box h-100">
+          <div class="purple-text"><i class="fas fa-bolt"></i></div>
+          <div>NFT Activity</div>
+          <small>6</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-custom">
+      <div class="d-flex justify-content-between">
+        <div>Your earnings From Videos</div>
+        <small class="text-muted">Weekly</small>
+      </div>
+      <div class="d-flex align-items-center justify-content-between mt-3">
+        <div>
+          <div class="text-success-custom">+160%</div>
+          <div>$450</div>
+        </div>
+        <!-- <canvas id="videoEarningsChart" width="180" height="100"></canvas> -->
+         <canvas id="videoEarningsChart" class="chart-small"></canvas>
+
+      </div>
+    </div>
+
+    <div class="card-custom">
+      <div class="d-flex justify-content-between">
+        <div>Follower's Statistic</div>
+        <small class="text-muted">Weekly</small>
+      </div>
+      <!-- <canvas id="followersChart" class="mt-3" height="200"></canvas> -->
+
+      <canvas id="followersChart" class="chart-medium mt-3"></canvas>
+
+    </div>
+
+    <div class="card-custom">
+      <div class="d-flex justify-content-between">
+        <div>Your earnings From NFTs</div>
+        <small class="text-muted">Weekly</small>
+      </div>
+      <div class="d-flex align-items-center justify-content-between mt-3">
+        <div>
+          <div class="text-success-custom">+407%</div>
+          <div>$410</div>
+        </div>
+        <!-- <canvas id="nftEarningsChart" width="180" height="100"></canvas> -->
+
+        <canvas id="nftEarningsChart" class="chart-small"></canvas>
+
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h6>Top Creators</h6>
+      <a href="NFT.html" class="purple-text small">See all</a>
+    </div>
+    <div class="d-flex justify-content-between mb-3">
+      <div class="text-center">
+        <img src="images/istockphoto-178487234.jpg" class="profile-avatar mb-1" alt="">
+        <div>BoyAlone</div>
+        <small>$76,000 <span class="text-success-custom">+56.7%</span></small>
+      </div>
+      <div class="text-center">
+        <img src="images/istockphoto-532174758-6457.jpg" class="profile-avatar mb-1" alt="">
+        <div>CryptoGe</div>
+        <small>$23,000 <span class="text-success-custom">+26.7%</span></small>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h6>Top NFTs</h6>
+      <a href="#" class="purple-text small">See all</a>
+    </div>
+    <table class="table table-dark table-sm">
+      <thead>
+        <tr>
+          <th>Collections</th>
+          <th>Volume</th>
+          <th>24 hrs</th>
+          <th>Owners</th>
+          <th>Mid Price</th>
+          <th>Items</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><img src="images/smart-microchip-background-motherboard-closeup-technology-remix.jpg" alt="" width="30" class="me-2"> Monk</td>
+          <td>$670.5</td>
+          <td class="text-success-custom">+150.8%</td>
+          <td>700</td>
+          <td>10k</td>
+          <td>19k</td>
+        </tr>
+        <tr>
+          <td><img src="images/smart-microchip-background-motherboard-closeup-technology.jpg" alt="" width="30" class="me-2"> TeoX</td>
+          <td>$540</td>
+          <td class="text-success-custom">+56.7%</td>
+          <td>640</td>
+          <td>9k</td>
+          <td>14k</td>
+        </tr>
+        <tr>
+          <td><img src="images/ai-nuclear-energy-future-innovation.avif" alt="" width="30" class="me-2"> MM</td>
+          <td>$370.5</td>
+          <td class="text-success-custom">+30.1%</td>
+          <td>500</td>
+          <td>7k</td>
+          <td>12k</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <script>
+    const chartOptions = {
+      animation: {
+        duration: 1500,
+        easing: 'easeOutBounce'
+      },
+      responsive: true,
+      plugins: {
+        legend: { display: false }
+      }
+    };
+
+    new Chart(document.getElementById('mainChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Earned', 'Pending'],
+        datasets: [{
+          data: [67000, 12000],
+          backgroundColor: ['#3dfc85', '#a855f7']
+        }]
+      },
+      options: chartOptions
+    });
+
+    new Chart(document.getElementById('videoEarningsChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+        datasets: [{
+          label: 'Video Earnings',
+          data: [120, 150, 300, 200, 450],
+          backgroundColor: '#3dfc85'
+        }]
+      },
+      options: chartOptions
+    });
+
+    new Chart(document.getElementById('nftEarningsChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+        datasets: [{
+          label: 'NFT Earnings',
+          data: [60, 80, 90, 150, 410],
+          backgroundColor: '#a855f7'
+        }]
+      },
+      options: chartOptions
+    });
+
+    new Chart(document.getElementById('followersChart'), {
+      type: 'line',
+      data: {
+        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+        datasets: [{
+          label: 'Followers',
+          data: [100, 300, 600, 900],
+          borderColor: '#3dfc85',
+          fill: false,
+          tension: 0.4
+        }]
+      },
+      options: chartOptions
+    });
+
+
+
+     window.addEventListener('load', () => {
+    const spinner = document.getElementById('loadingSpinner');
+    spinner.classList.add('hidden');
+    setTimeout(() => spinner.remove(), 700); // Optional cleanup
+  });
+  </script>
+</body>
+</html>
